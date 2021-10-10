@@ -1,31 +1,63 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Fragment } from "react";
-import { Counter } from "./components/learningUseState"
 import { getPokemons } from "./services/fetchinPokeapi"
+import './App.css';
 
 
 function App() {
+  const pokemonInput = useRef()
+  const pokemonsToCallAPI = useRef()
   const [pokemonsList, setpokemonsList] = useState([]);
-  useEffect(() => {
-    let mounted = true;
-    getPokemons()
-      .then(items => {
-        if(mounted) {
-          setpokemonsList(items)
-        }
-      })
-    return () => mounted = false;
-  }, [])
+  const [pokemonsCaught, setpokemonsCaught] = useState([]);
 
+  const CallTheAPI = async () => {
+    const numero = pokemonsToCallAPI.current.value;
+    let url = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit='
+    const pokeList = await getPokemons(url, numero)
+    setpokemonsList(pokeList)
+    pokemonsToCallAPI.current.value = null
+    }
 
+  const findPokemon = () => {
+    const pokemonTyped = pokemonInput.current.value;
+    if (pokemonTyped === '') {
+      return
+    }
+
+    pokemonsList.forEach((pokemon) => {
+      if (pokemon.name === pokemonTyped) {
+        setpokemonsCaught((pevpokes) => {
+          return [... pevpokes, pokemonTyped]
+        })
+      }
+    });
+    pokemonInput.current.value = null
+  }
+  const freePokemon = () => {
+    setpokemonsCaught(() => {
+      return []
+    })
+  }
   return (
   <Fragment>
     <h1>Pokemon ... atrapalos ya</h1>
-    <Counter></Counter>
-    <h2>Pokemons to catch {pokemonsList.length}</h2>
-    <ul>
-       {pokemonsList.map(item => <li key={item.name}>{item.name}</li>)}
+    <input ref={pokemonsToCallAPI} type="text" placeholder="Type here how many pokemons do you wanna see"></input>
+    <button onClick={CallTheAPI}>call the API</button>
+    <h2>Pokemons to catch {pokemonsList.length - pokemonsCaught.length}</h2>
+    <div className="container">
+      <ul>
+       {pokemonsList.map((item, pos) => <li key={item.name}><strong>{pos + 1} </strong>{item.name}</li>)}
      </ul>
+    </div>
+    <h2>Pokemons caught = {pokemonsCaught.length}</h2>
+    <input ref={pokemonInput} type="text" placeholder="Type here your pokemon"></input>
+    <button onClick={freePokemon}>free pokemons</button>
+    <button onClick={findPokemon}>capture</button>
+    <div className="container">
+      <ul>
+       {pokemonsCaught.map((item, pos) => <li>{item}</li>)}
+     </ul>
+    </div>
   </Fragment>
   );
 }

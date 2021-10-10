@@ -1,5 +1,10 @@
-export function getPokemons() {
-  return fetch('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150')
+export function getPokemons(url, numero) {
+  if (numero == '') {
+    numero = 150
+  }
+  const newurl = url + numero
+  console.log(newurl)
+  return fetch(newurl)
     .then(data => data.json())
     .then(data => data.results)
 }

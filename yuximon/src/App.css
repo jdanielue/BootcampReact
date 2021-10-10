@@ -1,1 +1,4 @@
-
+.container {
+    columns: 9;
+    color: blue;
+}
