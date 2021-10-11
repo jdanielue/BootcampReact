@@ -10,6 +10,10 @@ function App() {
   const [pokemonsList, setpokemonsList] = useState([]);
   const [pokemonsCaught, setpokemonsCaught] = useState([]);
 
+  const Info = (pos) => {
+    console.log(pos)
+  }
+
   const CallTheAPI = async () => {
     const numero = pokemonsToCallAPI.current.value;
     let url = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit='
@@ -40,7 +44,7 @@ function App() {
   }
   return (
   <Fragment>
-    <h1>Pokemon ... atrapalos ya</h1>
+    <h1>Pokemon ... Gotta Catch Em All</h1>
     <input ref={pokemonsToCallAPI} type="text" placeholder="Type here how many pokemons do you wanna see"></input>
     <button onClick={CallTheAPI}>call the API</button>
     <h2>Pokemons to catch {pokemonsList.length - pokemonsCaught.length}</h2>
@@ -53,9 +57,9 @@ function App() {
     <input ref={pokemonInput} type="text" placeholder="Type here your pokemon"></input>
     <button onClick={freePokemon}>free pokemons</button>
     <button onClick={findPokemon}>capture</button>
-    <div className="container">
+    <div className="container2">
       <ul>
-       {pokemonsCaught.map((item, pos) => <li>{item}</li>)}
+       {pokemonsCaught.map((item, pos) => <li key={item} onClick={(item)=>Info(item)} >{item}</li>)}
      </ul>
     </div>
   </Fragment>
