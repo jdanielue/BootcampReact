@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Fragment } from "react";
 import axios from "axios";
-import { getPokemons } from "./services/fetchinPokeapi";
+import InfoPokemon from "./components/InfoPokemon";
 import './App.css';
 
 
@@ -9,7 +9,7 @@ import './App.css';
   const useRequest = (url) => {
     const [loading, setLoading] = useState(true);
     const [pokemonsList, setPokemonsList] = useState([]);
-
+   
     //axios
     useEffect(() => {
       const getData = async () => {
@@ -39,7 +39,7 @@ import './App.css';
 function App() {
   const pokemonInput = useRef()
   const [pokemonsCaught, setpokemonsCaught] = useState([]);
-  const [infopokemon, setInfopokemon] = useState('');
+  const [infoPokemonResults, setInfoPokemonResults] = useState({});
 
   const {
     loading,
@@ -68,14 +68,6 @@ function App() {
     })
   }
 
-  const Informacion = (pokemon) => {
-    console.log(pokemon);
-    return (
-        <h3>
-          {pokemon}
-        </h3>
-    )
-  }
 
   return (
   <Fragment>
@@ -96,11 +88,16 @@ function App() {
     <button onClick={freePokemon}>free pokemons</button>
     <button onClick={findPokemon}>capture</button>
     <div className="container2">
-      <ul>
-       {pokemonsCaught.map((pokemon, pos) => <li key={pokemon.name}>{pokemon.name}<button onClick={() => Informacion(pokemon.url)}>info</button></li>)}
-     </ul>
+        <ul className={"columna1"}>
+        {pokemonsCaught.map((pokemon, pos) => 
+            <InfoPokemon pokemon={pokemon} setInfo={setInfoPokemonResults}   />)
+        }
+      </ul>
+      <div className="columna2">
+        {infoPokemonResults && infoPokemonResults.name}
+      </div>
     </div>
-    <Informacion/>
+   
     <div>
     </div>
   </Fragment>

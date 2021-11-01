@@ -4,9 +4,23 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 .container2 {
-    columns: 3;
+    columns: 2;
     color: green;
     font-family: Arial, Helvetica, sans-serif;
+    background-color: red;
+    display: flex;
+    justify-content: space-around;
+    
+    
+}
+
+.columna1{
+    width: 50%;
+}
+.columna2{
+    width: 50%;
+    height: 700px;
+    background-color: blue;
 }
 
 h1 {
