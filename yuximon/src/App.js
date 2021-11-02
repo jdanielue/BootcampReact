@@ -89,7 +89,7 @@ function App() {
     <button onClick={findPokemon}>capture</button>
     <div className="container2">
         <ul className={"columna1"}>
-        {pokemonsCaught.map((pokemon, pos) => 
+        {pokemonsCaught.map((pokemon, pos) =>
             <InfoPokemon pokemon={pokemon} setInfo={setInfoPokemonResults}   />)
         }
       </ul>
@@ -97,7 +97,6 @@ function App() {
         {infoPokemonResults && infoPokemonResults.name}
       </div>
     </div>
-   
     <div>
     </div>
   </Fragment>
