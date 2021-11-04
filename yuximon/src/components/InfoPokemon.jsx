@@ -3,7 +3,6 @@ import "../InfoPokemon.css";
 import axios from "axios";
 
 const InfoPokemon = ({ pokemon, setInfo }) => {
-  const [openUrl, setOpenUrl] = useState(false);
 
   const hadlerInfo = async () => {
     try {
@@ -11,6 +10,7 @@ const InfoPokemon = ({ pokemon, setInfo }) => {
       if (res?.status === 200 || res?.status === 201) {
         const data = await res.data;
         setInfo(data);
+        console.log(data);
       }
     } catch (err) {
       console.log(err);
@@ -18,10 +18,8 @@ const InfoPokemon = ({ pokemon, setInfo }) => {
   };
 
   return (
-    <li className={"containerInfoPokemon"} key={pokemon.name}>
+    <li className={"containerInfoPokemon"} key={pokemon.name} onClick={hadlerInfo}>
       {pokemon.name}
-      {openUrl && pokemon.url}
-      <button onClick={hadlerInfo}>Info</button>
     </li>
   );
 };

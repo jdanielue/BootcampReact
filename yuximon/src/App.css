@@ -18,9 +18,9 @@
     margin: 50px 100px;
     background-color: rgb(255, 255, 255);
     width: 30%;
-    border-style: groove;
     border-radius: 20px;
     height: 500px;
+    border-style: groove;
 }
 .columna2{
     margin: 50px 100px;
