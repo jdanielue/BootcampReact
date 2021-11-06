@@ -3,6 +3,11 @@ import { Fragment } from "react";
 import axios from "axios";
 import InfoPokemon from "./components/InfoPokemon";
 import "./App.css";
+import searchImage from "./images/Search.png";
+import typeImage from "./images/Type.png";
+import homeImage from "./images/Home.png";
+import releaseImage from "./images/Release.png";
+import detailsImage from "./images/Details.png";
 
 //custom hook
 const useRequest = (url) => {
@@ -66,31 +71,25 @@ function App() {
   return (
     <Fragment>
       {loading ? (
-        <h1>loading</h1>
+        <h1 className="cargando">loading</h1>
       ) : (
         <div>
-          <h1>Pokemon ... Gotta Catch Em All</h1>
-          <h2>
-            Pokemons to catch {pokemonsList.length - pokemonsFound.length}
-          </h2>
-          <div className="container">
-            <ul>
-              {pokemonsList.map((item, pos) => (
-                <li key={item.name}>
-                  <strong>{pos + 1} </strong>
-                  {item.name}
-                </li>
-              ))}
-            </ul>
+          <div className="topBox">
+            <img classname="topIcon" src={typeImage} alt={"icon type"} />
+            <img
+              classname="topIcon"
+              src={searchImage}
+              alt={"icon search"}
+              onClick={findPokemon}
+            />
+            <input
+              className="input"
+              ref={pokemonInput}
+              type="text"
+              placeholder="Type here your pokemon"
+            ></input>
+            <img classname="topIcon" src={homeImage} alt={"home search"} />
           </div>
-          <h2>Pokemons found = {pokemonsFound.length}</h2>
-          <input
-            ref={pokemonInput}
-            type="text"
-            placeholder="Type here your pokemon"
-          ></input>
-          <button onClick={freePokemon}>free pokemons</button>
-          <button onClick={findPokemon}>Find</button>
           <div className="container2">
             <ul className={"columna1"}>
               {pokemonsFound.map((pokemon, pos) => (
@@ -101,10 +100,28 @@ function App() {
               ))}
             </ul>
             <div className="columna2">
-              {infoPokemonResults.abilities && <h3>Abilities</h3>}
-              {infoPokemonResults.abilities && infoPokemonResults.abilities.map((element) => <li>{element.ability.name}</li>)}
-              {infoPokemonResults.abilities && <h3>types</h3>}
-              {infoPokemonResults.abilities && infoPokemonResults.types.map((element) => <li>{element.type.name}</li>)}
+              <div className="subColumna1">
+                {infoPokemonResults.abilities && <h3>Abilities</h3>}
+                {infoPokemonResults.abilities &&
+                  infoPokemonResults.abilities.map((element) => (
+                    <li>{element.ability.name}</li>
+                  ))}
+                {infoPokemonResults.abilities && <h3>types</h3>}
+                {infoPokemonResults.abilities &&
+                  infoPokemonResults.types.map((element) => (
+                    <li>{element.type.name}</li>
+                  ))}
+                {infoPokemonResults.abilities && (
+                  <img className="pokemonImage"
+                    src={infoPokemonResults.sprites.front_default}
+                    alt="pokemon_pic"
+                  />
+                )}
+              </div>
+              <div className="subColumna2">
+              <img classname="subColumna2Icons" src={releaseImage} alt={"release type"} onClick={freePokemon}/>
+              <img classname="subColumna2Icons" src={detailsImage} alt={"details type"} />
+              </div>
             </div>
           </div>
           <div></div>
