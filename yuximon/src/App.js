@@ -1,32 +1,133 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Fragment } from "react";
-import { Counter } from "./components/learningUseState"
-import { getPokemons } from "./services/fetchinPokeapi"
+import axios from "axios";
+import InfoPokemon from "./components/InfoPokemon";
+import "./App.css";
+import searchImage from "./images/Search.png";
+import typeImage from "./images/Type.png";
+import homeImage from "./images/Home.png";
+import releaseImage from "./images/Release.png";
+import detailsImage from "./images/Details.png";
 
+//custom hook
+const useRequest = (url) => {
+  const [loading, setLoading] = useState(true);
+  const [pokemonsList, setPokemonsList] = useState([]);
+
+  //axios
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const {
+          data: { results },
+        } = await axios.get(url);
+        console.log(results);
+        setLoading(false);
+        setPokemonsList(results);
+      } catch (error) {}
+    };
+    setTimeout(() => {
+      getData();
+    }, 1000);
+  }, []);
+  return {
+    loading,
+    pokemonsList,
+  };
+};
 
 function App() {
-  const [pokemonsList, setpokemonsList] = useState([]);
-  useEffect(() => {
-    let mounted = true;
-    getPokemons()
-      .then(items => {
-        if(mounted) {
-          setpokemonsList(items)
-        }
-      })
-    return () => mounted = false;
-  }, [])
+  const pokemonInput = useRef();
+  const [pokemonsFound, setpokemonsFound] = useState([]);
+  const [infoPokemonResults, setInfoPokemonResults] = useState({});
 
+  const { loading, pokemonsList } = useRequest(
+    "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150"
+  );
+
+  const findPokemon = () => {
+    const pokemonTyped = pokemonInput.current.value;
+    if (pokemonTyped === "") {
+      return;
+    }
+
+    const pokemon = pokemonsList.find(
+      (pokemon) => pokemon.name === pokemonTyped
+    );
+
+    if (pokemon) {
+      setpokemonsFound((pevpokes) => {
+        return [...pevpokes, pokemon];
+      });
+    }
+    pokemonInput.current.value = null;
+  };
+  const freePokemon = () => {
+    setpokemonsFound(() => {
+      return [];
+    });
+  };
 
   return (
-  <Fragment>
-    <h1>Pokemon ... atrapalos ya</h1>
-    <Counter></Counter>
-    <h2>Pokemons to catch {pokemonsList.length}</h2>
-    <ul>
-       {pokemonsList.map(item => <li key={item.name}>{item.name}</li>)}
-     </ul>
-  </Fragment>
+    <Fragment>
+      {loading ? (
+        <h1 className="cargando">loading</h1>
+      ) : (
+        <div>
+          <div className="topBox">
+            <img classname="topIcon" src={typeImage} alt={"icon type"} />
+            <img
+              classname="topIcon"
+              src={searchImage}
+              alt={"icon search"}
+              onClick={findPokemon}
+            />
+            <input
+              className="input"
+              ref={pokemonInput}
+              type="text"
+              placeholder="Type here your pokemon"
+            ></input>
+            <img classname="topIcon" src={homeImage} alt={"home search"} />
+          </div>
+          <div className="container2">
+            <ul className={"columna1"}>
+              {pokemonsFound.map((pokemon, pos) => (
+                <InfoPokemon
+                  pokemon={pokemon}
+                  setInfo={setInfoPokemonResults}
+                />
+              ))}
+            </ul>
+            <div className="columna2">
+              <div className="subColumna1">
+                {infoPokemonResults.abilities && <h3>Abilities</h3>}
+                {infoPokemonResults.abilities &&
+                  infoPokemonResults.abilities.map((element) => (
+                    <li>{element.ability.name}</li>
+                  ))}
+                {infoPokemonResults.abilities && <h3>types</h3>}
+                {infoPokemonResults.abilities &&
+                  infoPokemonResults.types.map((element) => (
+                    <li>{element.type.name}</li>
+                  ))}
+                {infoPokemonResults.abilities && (
+                  <img className="pokemonImage"
+                    src={infoPokemonResults.sprites.front_default}
+                    alt="pokemon_pic"
+                  />
+                )}
+              </div>
+              <div className="subColumna2">
+              <img classname="subColumna2Icons" src={releaseImage} alt={"release type"} onClick={freePokemon}/>
+              <img classname="subColumna2Icons" src={detailsImage} alt={"details type"} />
+              </div>
+            </div>
+          </div>
+          <div></div>
+        </div>
+      )}
+    </Fragment>
   );
 }
 
