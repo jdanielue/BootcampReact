@@ -1,5 +1,4 @@
-import { useEffect, useState, useRef } from "react";
-import { Fragment } from "react";
+import { useEffect, useState, useRef, Fragment } from "react";
 import axios from "axios";
 import InfoPokemon from "./components/InfoPokemon";
 import "./App.css";
@@ -8,6 +7,7 @@ import typeImage from "./images/Type.png";
 import homeImage from "./images/Home.png";
 import releaseImage from "./images/Release.png";
 import detailsImage from "./images/Details.png";
+import { Modals } from "./components/Modals";
 
 //custom hook
 const useRequest = (url) => {
@@ -101,26 +101,24 @@ function App() {
             </ul>
             <div className="columna2">
               <div className="subColumna1">
-                {infoPokemonResults.abilities && <h3>Abilities</h3>}
-                {infoPokemonResults.abilities &&
-                  infoPokemonResults.abilities.map((element) => (
-                    <li>{element.ability.name}</li>
-                  ))}
-                {infoPokemonResults.abilities && <h3>types</h3>}
-                {infoPokemonResults.abilities &&
-                  infoPokemonResults.types.map((element) => (
-                    <li>{element.type.name}</li>
-                  ))}
+                {infoPokemonResults.abilities && <h3>{infoPokemonResults.name}</h3>}
                 {infoPokemonResults.abilities && (
-                  <img className="pokemonImage"
+                  <img
+                    className="pokemonImage"
                     src={infoPokemonResults.sprites.front_default}
                     alt="pokemon_pic"
                   />
                 )}
               </div>
               <div className="subColumna2">
-              <img classname="subColumna2Icons" src={releaseImage} alt={"release type"} onClick={freePokemon}/>
-              <img classname="subColumna2Icons" src={detailsImage} alt={"details type"} />
+                <img
+                  classname="subColumna2Icons"
+                  src={releaseImage}
+                  alt={"release type"}
+                  onClick={freePokemon}
+                />
+                <Modals detailsImage={detailsImage} pokemon={infoPokemonResults}/>
+                {/* <Modals/> */}
               </div>
             </div>
           </div>
