@@ -92,7 +92,7 @@ function App() {
           </div>
           <div className="container2">
             <ul className={"columna1"}>
-              {pokemonsFound.map((pokemon, pos) => (
+              {pokemonsList.map((pokemon, pos) => (
                 <InfoPokemon
                   pokemon={pokemon}
                   setInfo={setInfoPokemonResults}
