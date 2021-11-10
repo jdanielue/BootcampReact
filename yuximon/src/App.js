@@ -4,10 +4,11 @@ import InfoPokemon from "./components/InfoPokemon";
 import "./App.css";
 import searchImage from "./images/Search.png";
 import typeImage from "./images/Type.png";
-import homeImage from "./images/Home.png";
-import releaseImage from "./images/Release.png";
+
+import CatchImage from "./images/Catch.png";
 import detailsImage from "./images/Details.png";
 import { Modals } from "./components/Modals";
+import BasicExample from "./Router";
 
 //custom hook
 const useRequest = (url) => {
@@ -40,6 +41,7 @@ function App() {
   const pokemonInput = useRef();
   const [pokemonsFound, setpokemonsFound] = useState([]);
   const [infoPokemonResults, setInfoPokemonResults] = useState({});
+  const [catchList, setcatchList] = useState([]);
 
   const { loading, pokemonsList } = useRequest(
     "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150"
@@ -68,6 +70,26 @@ function App() {
     });
   };
 
+  // const findPokemon = () => {
+  //   const pokemonTyped = pokemonInput.current.value;
+  //   const pokemonMatch = catchList
+
+  //   if (!pokemonTyped) 
+
+  //   if (pokemonMatch.includes(pokemonTyped)) {
+
+  //   }
+  // }
+
+  const catchPokemon = () => {
+    const pokemon = infoPokemonResults;
+    if (pokemon) {
+      setcatchList((prevcaught) => {
+        return [...prevcaught, pokemon];
+      });
+    }
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -88,7 +110,7 @@ function App() {
               type="text"
               placeholder="Type here your pokemon"
             ></input>
-            <img classname="topIcon" src={homeImage} alt={"home search"} />
+            <BasicExample catchList={catchList}/>
           </div>
           <div className="container2">
             <ul className={"columna1"}>
@@ -101,7 +123,9 @@ function App() {
             </ul>
             <div className="columna2">
               <div className="subColumna1">
-                {infoPokemonResults.abilities && <h3>{infoPokemonResults.name}</h3>}
+                {infoPokemonResults.abilities && (
+                  <h3>{infoPokemonResults.name}</h3>
+                )}
                 {infoPokemonResults.abilities && (
                   <img
                     className="pokemonImage"
@@ -113,11 +137,15 @@ function App() {
               <div className="subColumna2">
                 <img
                   classname="subColumna2Icons"
-                  src={releaseImage}
-                  alt={"release type"}
-                  onClick={freePokemon}
+                  src={CatchImage}
+                  alt={"Catch type"}
+                  onClick={catchPokemon}
                 />
-                <Modals detailsImage={detailsImage} pokemon={infoPokemonResults}/>
+                <Modals
+                  detailsImage={detailsImage}
+                  pokemon={infoPokemonResults}
+                  catchPokemon={catchPokemon}
+                />
                 {/* <Modals/> */}
               </div>
             </div>

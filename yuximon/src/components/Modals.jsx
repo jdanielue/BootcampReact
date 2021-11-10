@@ -2,8 +2,9 @@ import React from "react";
 import { useModal } from "../hooks/useModal";
 import { Modal } from "./Modal";
 import exitImage from "../images/xicon.JPG";
+import CatchImage from "../images/Catch.png";
 
-export const Modals = ({ detailsImage, pokemon }) => {
+export const Modals = ({ detailsImage, pokemon, catchPokemon }) => {
   const [isOpenModal, openModal, closeModal] = useModal(false);
   return (
     //     <img
@@ -51,7 +52,13 @@ export const Modals = ({ detailsImage, pokemon }) => {
                 {pokemon.abilities &&
                   pokemon.types.map((element) => (
                     <li>{element.type.name}</li>
-                  ))}
+                    ))}
+                    <img
+                            classname="subColumna2Icons"
+                            src={CatchImage}
+                            alt={"Catch type"}
+                            onClick={catchPokemon}
+                          />
             </div>
           </div>
         </div>
