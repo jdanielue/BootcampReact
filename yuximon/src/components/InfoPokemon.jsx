@@ -10,7 +10,7 @@ const InfoPokemon = ({ pokemon, setInfo }) => {
       if (res?.status === 200 || res?.status === 201) {
         const data = await res.data;
         setInfo(data);
-        console.log(data);
+        // console.log(data);
       }
     } catch (err) {
       console.log(err);
