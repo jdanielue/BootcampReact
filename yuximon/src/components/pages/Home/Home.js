@@ -1,12 +1,12 @@
 import { useState, useRef, Fragment } from "react";
 import InfoPokemon from "../../InfoPokemon";
+import { Modals } from "../../Modals";
+import useRequest from "../../../hooks/useRequest";
+import "./home.css";
 import searchImage from "../../../images/Search.png"
 import typeImage from "../../../images/Type.png";
 import CatchImage from "../../../images/Catch.png";
 import detailsImage from "../../../images/Details.png";
-import { Modals } from "../../Modals";
-import useRequest from "../../../hooks/useRequest";
-import "./home.css";
 
 function App({setCatchList}) {
   const pokemonInput = useRef();

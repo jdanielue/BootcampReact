@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import homeImage from "./images/Home.png";
 
-export default function BasicExample() {
+export default function RoutingPokemons() {
   const [catchList, setCatchList] = useState([])
   return (
     <Router>
