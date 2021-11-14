@@ -36,29 +36,29 @@ export const Modals = ({ detailsImage, pokemon, catchPokemon }) => {
           </div>
           <div className="infomodalAll">
             <div className="infomodal column-1">
-            <img
-                    className="pokemonImage"
-                    src={pokemon.sprites && pokemon.sprites.front_shiny}
-                    alt="pokemon_pic"
-                  />
+              <img
+                className="pokemonImage"
+                src={pokemon.sprites && pokemon.sprites.front_shiny}
+                alt="pokemon_pic"
+              />
             </div>
             <div className="infomodal column-2">
-            {pokemon.abilities && <h3>Abilities</h3>}
-                {pokemon.abilities &&
-                  pokemon.abilities.map((element) => (
-                    <li>{element.ability.name}</li>
-                  ))}
-                {pokemon.abilities && <h3>types</h3>}
-                {pokemon.abilities &&
-                  pokemon.types.map((element) => (
-                    <li>{element.type.name}</li>
-                    ))}
-                    <img
-                            classname="subColumna2Icons"
-                            src={CatchImage}
-                            alt={"Catch type"}
-                            onClick={catchPokemon}
-                          />
+              {pokemon.abilities && <h3>Abilities</h3>}
+              {pokemon.abilities &&
+                pokemon.abilities.map((element) => (
+                  <li>{element.ability.name}</li>
+                ))}
+              {pokemon.abilities && <h3>types</h3>}
+              {pokemon.abilities &&
+                pokemon.types.map((element) => <li>{element.type.name}</li>)}
+            </div>
+            <div>
+              <img
+                className="subColumna2Icons"
+                src={CatchImage}
+                alt={"Catch type"}
+                onClick={catchPokemon}
+              />
             </div>
           </div>
         </div>

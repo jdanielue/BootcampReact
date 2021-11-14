@@ -1,22 +1,17 @@
-import { useState, useRef, Fragment } from "react";
+import { useState, Fragment } from "react";
+import { Link } from "react-router-dom";
 import InfoPokemon from "../../InfoPokemon";
 import { Modals } from "../../Modals";
-import useRequest from "../../../hooks/useRequest";
-import "./home.css";
+import styles from "./home.module.scss";
 import searchImage from "../../../images/Search.png"
 import typeImage from "../../../images/Type.png";
 import CatchImage from "../../../images/Catch.png";
 import detailsImage from "../../../images/Details.png";
+import homeImage from "../../../images/Home.png";
 
-function App({setCatchList}) {
-  const pokemonInput = useRef();
+function App({setCatchList, pokemonsList, pokemonToFiltered, setpokemonToFiltered}) {
   const [infoPokemonResults, setInfoPokemonResults] = useState({});
-  const [pokemonToFiltered, setpokemonToFiltered] = useState([]);
   
-  const { loading, pokemonsList } = useRequest(
-    "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150", setpokemonToFiltered
-    );
-
   const catchPokemon = () => {
     const pokemon = infoPokemonResults;
     if (pokemon) {
@@ -46,55 +41,56 @@ function App({setCatchList}) {
   }
 
   return (
-    <Fragment>
-      {loading ? (
-        <h1 className="cargando">loading</h1>
-      ) : (
+    <Fragment className={styles.body}>
         <div>
-          <div className="topBox">
-            <img classname="topIcon" src={typeImage} alt={"icon type"} />
+          <div className={styles.topBox}>
+            <img className={styles.topIcon} src={typeImage} alt={"icon type"} />
             <img
-              classname="topIcon"
+              className={styles.topIcon}
               src={searchImage}
               alt={"icon search"}
             />
             <input
-              className="input"
-              ref={pokemonInput}
+              className={styles.input}
               type="text"
               placeholder="Type here your pokemon"
               onChange={ (event) => handlerOnChange(event) }
             ></input>
+            <Link to="/home">
+              <img className={styles.topIcon} src={homeImage} alt={"home search"} />
+            </Link>
           </div>
-          <div className="container2">
-            <ul className={"columna1"}>
+          <div className={styles.container2}>
+            <ul className={styles.columna1}>
               {pokemonToFiltered.map((pokemon, pos) => (
                 <InfoPokemon
                   pokemon={pokemon}
+                  pos={pos + 1}
                   setInfo={setInfoPokemonResults}
                 />
               ))}
             </ul>
-            <div className="columna2">
-              <div className="subColumna1">
+            <div className={styles.columna2}>
+              <div className={styles.subColumna1}>
                 {infoPokemonResults.abilities && (
-                  <h3>{infoPokemonResults.name}</h3>
+                  <h2>{infoPokemonResults.name}</h2>
                 )}
                 {infoPokemonResults.abilities && (
                   <img
-                    className="pokemonImage"
+                    className={styles.pokemonImage}
                     src={infoPokemonResults.sprites.front_default}
                     alt="pokemon_pic"
                   />
                 )}
               </div>
-              <div className="subColumna2">
+              <div className={styles.subColumna2}>
+              <Link to="/caught">
                 <img
-                  classname="subColumna2Icons"
+                  className={styles.subColumna2Icons}
                   src={CatchImage}
                   alt={"Catch type"}
-                  onClick={catchPokemon}
                 />
+                </Link>
                 <Modals
                   detailsImage={detailsImage}
                   pokemon={infoPokemonResults}
@@ -106,7 +102,6 @@ function App({setCatchList}) {
           </div>
           <div></div>
         </div>
-      )}
     </Fragment>
   );
 }

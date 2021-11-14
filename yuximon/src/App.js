@@ -1,39 +1,43 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Home from "./components/pages/Home";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import homeImage from "./images/Home.png";
+import Caught from "./components/pages/Caught"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import useRequest from "./hooks/useRequest";
+import { Fragment } from "react/cjs/react.production.min";
+import styles from "./App.module.scss"
+
 
 export default function RoutingPokemons() {
-  const [catchList, setCatchList] = useState([])
-  return (
-    <Router>
-      <div>
-          <Link to="/home"><img classname="topIcon" src={homeImage} alt={"home search"}/></Link>
-          <Link to="/caught">caught</Link>
-        <Switch>
-          <Route path="/caught">
-            <Caught catchList={catchList}/>
-          </Route>
-          <Route path="/home">
-            <Home setCatchList={setCatchList}/>
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
-}
 
-function Caught({catchList}) {
-    console.log("catchList")
-    console.log(catchList)
+  const [pokemonToFiltered, setpokemonToFiltered] = useState([]);
+  const [catchList, setCatchList] = useState([]);
+
+  const { loading, pokemonsList } = useRequest(
+    "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150",
+    setpokemonToFiltered
+  );
+
   return (
-    <ul>
-       { catchList.map((pokemon) =><li>{pokemon.name}</li>)}
-    </ul>
-    );
+    <Fragment>
+      {loading ? (
+        <h1 className={styles.cargando}>loading</h1>
+      ) : (
+        <Router>
+          <div>
+            <Switch>
+              <Route path="/caught">
+                <Caught catchList={catchList} />
+              </Route>
+              <Route path="/home">
+                <Home setCatchList={setCatchList} pokemonsList={pokemonsList} pokemonToFiltered={pokemonToFiltered} setpokemonToFiltered={setpokemonToFiltered}/>
+              </Route>
+              <Route exact path="/">
+                <Home setCatchList={setCatchList} pokemonsList={pokemonsList} pokemonToFiltered={pokemonToFiltered} setpokemonToFiltered={setpokemonToFiltered}/>
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      )}
+    </Fragment>
+  );
 }
