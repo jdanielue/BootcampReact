@@ -1,3 +1,92 @@
 body {
-    background-color:  rgb(4, 12, 100);
+    background-color: rgb(4, 12, 100);
+}
+
+.container2 {
+    columns: 2;
+    color: green;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(4, 12, 100);
+    justify-content: space-around;
+    display: flex;
+}
+
+.columna1{
+    margin: 20px 20px 10px 20px;
+    background-color: rgb(255, 255, 255);
+    width: 30%;
+    border-radius: 20px;
+    height: 450px;
+    overflow-y: scroll
+}
+.columna2{
+    margin: 20px 20px 10px 20px;
+    background-color: rgb(255, 255, 255);
+    width: 70%;
+    border-radius: 20px;
+    height: 450px;
+    display: flex;
+    columns: 2;
+}
+
+.subColumna1 {
+    width: 70%;
+}
+
+.subColumna2 {
+    width: 30%;
+    position: relative;
+}
+
+.subColumna2Icons {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.pokemonImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    background-color: rgba(100, 100, 100, 0.15);
+    border-radius: 40px;
+}
+
+h1 {
+    font-family: 'Pokemon Solid', sans-serif;
+    color:rgb(255, 255, 255);
+}
+
+
+h2 {
+    /* font-family: 'Pokemon Solid', sans-serif; */
+    color:rgb(7, 0, 0);
+    font-size: 30px;
+    text-align: center;
+}
+
+.topBox {
+    columns: 4;
+    display: flex;
+}
+
+.input {
+    margin: 20px 0px 20px 20px;
+    width: 75%;
+    border-radius: 20px;
+    height: 75px;
+    font-size: 30px;
+    /* display: flex; */
+    /* background-image: url(./images/Search.png);
+    background-position: center right;
+    background-size: contain;
+    background-repeat: no-repeat; */
+}
+
+.topIcon {
+    background-color: rgb(255, 255, 255);
+    border: rgb(219, 23, 23);
+    border-radius: 30px;
+    margin: 15px;
 }

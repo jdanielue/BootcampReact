@@ -26,7 +26,7 @@ export default function RoutingPokemons() {
           <div>
             <Switch>
               <Route path="/caught">
-                <Caught catchList={catchList} />
+                <Caught catchList={catchList} setCatchList={setCatchList}/>
               </Route>
               <Route path="/home">
                 <Home setCatchList={setCatchList} pokemonsList={pokemonsList} pokemonToFiltered={pokemonToFiltered} setpokemonToFiltered={setpokemonToFiltered}/>
