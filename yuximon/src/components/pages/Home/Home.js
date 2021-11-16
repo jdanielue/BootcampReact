@@ -22,7 +22,7 @@ function App({
       setCatchList((prevcaught) => {
         let catchedArray = [];
         catchedArray = [...prevcaught, pokemon];
-        catchedArray.map((poke) => console.log(poke.name));
+        // catchedArray.map((poke) => console.log(poke.name));
         return catchedArray;
       });
     }

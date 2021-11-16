@@ -7,12 +7,15 @@ import typeImage from "../../../images/Type.png";
 import ReleaseImage from "../../../images/Release.png";
 import detailsImage from "../../../images/Details.png";
 import homeImage from "../../../images/Home.png";
+import InfoPokemonsCaptured from "../InfoPokemonsCaptured";
 
 function Caught({ catchList, setCatchList }) {
-  const [pokemonsCapuredTofilter, setPokemonsCapuredTofilter] =
-    useState(catchList);
+  // console.log(catchList)
+  const [pokemonsCapuredTofilter, setPokemonsCapuredTofilter] = useState(catchList);
+  const [infoPokemonResultsCaptured, setInfoPokemonResultsCaptured] = useState({});
 
   const relseasePokemons = () => {
+    setPokemonsCapuredTofilter([]);
     setCatchList([]);
   };
 
@@ -57,25 +60,26 @@ function Caught({ catchList, setCatchList }) {
         </div>
         <div className={styles.container2}>
           <ul className={styles.columna1}>
-            {pokemonsCapuredTofilter.map((pokemon) => (
-              <li>
-                {" "}
-                {pokemon.id} - {pokemon.name}
-              </li>
+            {pokemonsCapuredTofilter.map((pokemon, pos) => (
+              <InfoPokemonsCaptured
+              pokemon={pokemon}
+              setInfoCaptured={setInfoPokemonResultsCaptured}
+              infoPokemonResultsCaptured={infoPokemonResultsCaptured}
+              />
             ))}
           </ul>
           <div className={styles.columna2}>
             <div className={styles.subColumna1}>
-              {/* {infoPokemonResults.abilities && (
-                  <h2>{infoPokemonResults.name}</h2>
+              {infoPokemonResultsCaptured.abilities && (
+                  <h2>{infoPokemonResultsCaptured.name}</h2>
                 )}
-                {infoPokemonResults.abilities && (
+                {infoPokemonResultsCaptured.abilities && (
                   <img
                     className={styles.pokemonImage}
-                    src={infoPokemonResults.sprites.front_default}
+                    src={infoPokemonResultsCaptured.sprites.front_default}
                     alt="pokemon_pic"
                   />
-                )} */}
+                )}
             </div>
             <div className={styles.subColumna2}>
               <Link to="/caught">
@@ -86,11 +90,10 @@ function Caught({ catchList, setCatchList }) {
                   onClick={relseasePokemons}
                 />
               </Link>
-              {/* <Modals
+              <Modals
                 detailsImage={detailsImage}
-                // pokemon={infoPokemonResults}
-                // catchPokemon={catchPokemon}
-              /> */}
+                pokemon={infoPokemonResultsCaptured}
+              />
             </div>
           </div>
         </div>
