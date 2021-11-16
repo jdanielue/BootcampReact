@@ -1,8 +1,7 @@
-import { useState } from "react";
-import "../InfoPokemon.css";
+import "./InfoPokemon.css";
 import axios from "axios";
 
-const InfoPokemon = ({ pokemon, setInfo }) => {
+const InfoPokemon = ({ pokemon, setInfo, pos }) => {
 
   const hadlerInfo = async () => {
     try {
@@ -19,7 +18,7 @@ const InfoPokemon = ({ pokemon, setInfo }) => {
 
   return (
     <li className={"containerInfoPokemon"} key={pokemon.name} onClick={hadlerInfo}>
-      {pokemon.name}
+      {pos} - {pokemon.name}
     </li>
   );
 };
