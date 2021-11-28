@@ -1,0 +1,8 @@
+.containerInfoPokemon{
+    margin: 10px;
+    font-size: 30px;
+    color: black;
+    background-color: rgba(100, 100, 100, 0.25);
+    border-radius: 20px;
+    text-align: center;
+}
